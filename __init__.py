@@ -1,0 +1,2 @@
+import prediction_machine
+prediction_machine.main()
