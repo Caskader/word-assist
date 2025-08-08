@@ -1,2 +1,2 @@
-import prediction_machine
-prediction_machine.main()
+import input_handler
+input_handler.start_input_channel()

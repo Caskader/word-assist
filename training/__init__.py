@@ -78,15 +78,15 @@ def data_extrractor(words: list) -> tuple[dict[int, Token], dict[str, int]]:
 def word_extract() -> list[str]:
     """
     This function extracts words from a text file, ignoring certain characters.
-    It reads lines from 'data/sample.txt', splits them into words, and filters out unwanted characters.
+        It reads lines from 'data/sample.txt', splits them into words, and filters out unwanted characters.
     """
     print("Extracting words from the file...")
 
     f = open('data/training_data.txt', 'r')
     lines = f.readlines()
 
-    ignoring_characters = ['!', '@', '#', '$', '%', '^', '?', '&', '*', '(', '_', '+', '-', '=', '>', '<', '|', ':', ';', '.', '/', '~', '`', '[', ']', '\\', '"', ',', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\n', '\t']
-
+    ignoring_characters = ['!', '@', '#', '$', '%', '^', '?', '&', '*', '(', '_', '+', '-', '=', '>', '<', '|', ':', ';', '/', '~', '`', '[', ']', '\\', '"', ',', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\n', '\t']
+    discard_word = False  # Flag to indicate if the word should be discarded
     words = []
     for line in lines:
         for word in line.split(" "):
@@ -94,11 +94,15 @@ def word_extract() -> list[str]:
 
             for letter in list(word):  # Convert word to list of characters
                 # Check if the letter is not in the ignoring characters
-
+                if letter == '.':
+                    discard_word = True
                 if letter not in ignoring_characters:
                     wordl += letter
             wordl.lower()  # Convert the word to lowercase
-            words.append(wordl)
+            if not discard_word:
+                words.append(wordl)
+            else:
+                discard_word = False   
             if wordl == "":
                 words.remove(wordl)
     f.close()
